@@ -1,19 +1,30 @@
 <template>
   <div
-    class="data-container"
-    v-for="value in newArray"
-    v-bind:key="value - Math.random() * Math.random()"
+    v-bind:style="{
+      marginLeft: '10vw',
+      marginRight: '10vw',
+    }"
   >
     <div
-      class="array-element"
-      v-bind:style="{
-        height: value + 'px',
-        width: this.barWidth + 'px',
-        marginLeft: this.barMargin + 'px',
-        fontSize: this.barFont + 'px',
-      }"
+      class="data-container"
+      v-for="value in newArray"
+      v-bind:key="value - Math.random() * Math.random()"
     >
-      {{ value }}
+      <div
+        v-bind:style="{
+          height: value + 'px',
+          width: this.barWidth + 'vw',
+          marginLeft: this.barMargin + 'px',
+          fontSize: this.barFont + 'px',
+        }"
+        v-bind:class="{
+          'array-element': true,
+          active_wrong: wrong === value,
+          active_right: right === value,
+        }"
+      >
+        {{ value }}
+      </div>
     </div>
   </div>
 </template>
@@ -21,12 +32,12 @@
 <script>
 export default {
   name: "Home",
-  props: ["newArray"],
+  props: ["newArray", "wrong", "right"],
   data() {
     return {
-      barWidth: 10,
-      barMargin: 5,
-      barFont: 10,
+      barWidth: 3,
+      barMargin: 1,
+      barFont: 5,
     };
   },
 
@@ -35,8 +46,7 @@ export default {
     deep: true,
     newArray(newArray) {
       // watch it if array change
-      // console.log(newArray);
-      this.barWidth = 1000 / newArray.length;
+      this.barWidth = 60 / newArray.length;
       this.barMargin = 1;
       this.barFont = 100 / newArray.length;
     },
@@ -52,14 +62,17 @@ export default {
   text-align: center;
 }
 .array-element {
-  /* width: 10px; */
   background: #6299f1;
   position: relative;
-  left: 5%;
-  /* margin: 5px; */
+  /* left: 5%; */
   float: left;
 }
-.active {
-  background-color: red;
+.active_wrong {
+  background-color: lightcoral;
+  transform: scaleX(1.2);
+}
+.active_right {
+  background-color: lightgreen;
+  transform: scaleX(1.2);
 }
 </style>
