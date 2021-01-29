@@ -49,8 +49,8 @@ export default {
       let start = this.newArray;
       for (let i = 0; i < this.newArray.length; i++) {
         let min = i;
+        await delay(100);
         for (let j = i + 1; j < this.newArray.length; j++) {
-          await delay(1000 / this.newArray.length);
           if (start != this.newArray) {
             return;
           }
@@ -70,7 +70,7 @@ export default {
       let start = this.newArray;
       for (let i = 0; i < this.newArray.length; i++) {
         for (let j = 0; j < this.newArray.length - i + 1; j++) {
-          await delay(1000 / this.newArray.length);
+          await delay(100);
           if (start != this.newArray) {
             return;
           }
