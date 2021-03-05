@@ -2,8 +2,10 @@
   <div class="Header">
     <div><button v-on:click="generate">Create new array</button></div>
     <div class="slider">
-      <h4>Change array size & sorting speed</h4>
-      <vue-slider v-model="value" v-bind="options" @click="generate" />
+      <h4>Change array size</h4>
+      <vue-slider v-model="value" v-bind="options" @change="generateArray" />
+      <h4>Change sorting speed</h4>
+      <vue-slider v-model="speed" v-bind="options" @change="changeSpeed" />
     </div>
     <div class="algorithms">
       <button v-on:click="selection">selection sort</button>
@@ -32,24 +34,29 @@ export default {
     return {
       newArray: [...Array(20)].map(() => ~~(Math.random() * 540)),
       value: 20,
-      options: { min: 5, max: 100, height: 10, lazy: "true", tooltip: "none" }, // slider options
+      speed: 30,
+      options: { min: 5, max: 100, height: 10 }, // slider options
       wrongElement: undefined,
       rightElement: undefined,
     };
   },
   methods: {
     // array generate function
-    generate: function() {
+    generateArray: function() {
       this.newArray = [...Array(this.value)].map(
         () => ~~(Math.random() * Math.random() * 940)
       );
+    },
+    //change array speed
+    changeSpeed: function() {
+      this.speed = this.value;
     },
     // Selection sort algo
     selection: async function() {
       let start = this.newArray;
       for (let i = 0; i < this.newArray.length; i++) {
         let min = i;
-        await delay(100);
+        await delay(this.speed * 10);
         for (let j = i + 1; j < this.newArray.length; j++) {
           if (start != this.newArray) {
             return;
